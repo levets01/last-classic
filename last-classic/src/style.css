@@ -2709,6 +2709,41 @@ img {
   }
 }
 
+/* =========================================================
+   AJUSTE RESPONSIVE — nada se interpone en móvil
+   Solo aplica a <= 900px; el diseño de escritorio queda intacto.
+   Causa: .nav es hermano de .header, así que flota durante todo el
+   scroll y en móvil ocupaba el 100% del ancho, tapando el hero.
+   ========================================================= */
+@media (max-width: 900px) {
+  /* 1. La píldora deja de ser una barra a todo el ancho: flota
+        centrada y con aire a los lados, tapan menos contenido. */
+  .nav {
+    max-width: calc(100% - 24px);
+    border-radius: 22px;
+  }
+
+  /* 2. El hero se despeja por arriba para que el título nunca quede
+        bajo la barra flotante al desplazarse. */
+  .hero {
+    padding-top: clamp(104px, 26vw, 150px);
+  }
+
+  /* 3. Interlineado del serif de display más aireado: con line-height
+        .98 las ascendentes y descendentes casi se tocaban. */
+  .hero__title {
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+
+  /* 4. Rótulos en mayúsculas: 0.34em de tracking se salía del ancho
+        disponible en pantallas estrechas. */
+  .hero__eyebrow,
+  .hero__subtitle {
+    letter-spacing: 0.18em;
+  }
+}
+
 @media (max-width: 720px) {
   .hero {
     min-height: 88svh;
