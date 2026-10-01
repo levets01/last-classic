@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LAST CLASSIC — FASHION. Prendas clásicas, modernos y versátiles. Comodidad, elegancia y atemporalidad." />
+  <meta name="theme-color" content="#FFFFFF" />
+  <title>LAST CLASSIC — FASHION</title>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- ===== Google Fonts: Bodoni Moda (títulos) + Montserrat (texto/UI) ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="./src/style.css" />
+
+  <!-- Aplica el tema guardado ANTES del primer pintado para evitar el flash blanco -->
+  <script>
+    (() => {
+      let saved = null;
+      try {
+        saved = localStorage.getItem('lc:theme');
+      } catch {}
+      const system = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = saved || (system ? 'dark' : 'light');
+    })();
+  </script>
+</head>
+
+<body>
+  <!-- =========================================================
+       1. TOP BAR — ANUNCIO SUPERIOR
+       ========================================================= -->
+  <div class="topbar" id="topbar">
+    <div class="topbar__inner">
+      <ul class="topbar__list">
+        <li><i data-lucide="truck"></i> Envíos a todo el país</li>
+        <li><i data-lucide="lock-keyhole"></i> Pagos 100% seguros</li>
+        <li><i data-lucide="rotate-ccw"></i> Cambios y devoluciones en 30 días</li>
+      </ul>
+      <p class="topbar__tagline">Tu estilo, nuestra inspiración</p>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       2. HEADER — GRID 1fr 1fr 1fr (logo centrado matemáticamente)
+       ========================================================= -->
+  <header class="header" id="header">
+    <!-- Columna izquierda: buscador expansivo + menú móvil -->
+    <div class="header__left">
+      <button class="icon-btn header__burger" id="burgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuDrawer">
+        <i data-lucide="menu"></i>
+      </button>
+
+      <div class="search" id="search">
+        <i class="search__icon" data-lucide="search"></i>
+        <input
+          class="search__input"
+          id="searchInput"
+          type="search"
+          placeholder="Buscar productos..."
+          autocomplete="off"
+          aria-label="Buscar productos" />
+        <button class="search__clear" id="searchClear" type="button" aria-label="Limpiar búsqueda">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Columna central: logo -->
+    <div class="header__center">
+      <a class="logo" href="#hero" aria-label="LAST CLASSIC — ir al inicio">
+        <span class="logo__wordmark">LAST CLASSIC</span>
+        <span class="logo__sub">FASHION</span>
+      </a>
+    </div>
+
+    <!-- Columna derecha: iconos interactivos -->
+    <div class="header__right">
+      <button class="icon-btn" id="themeBtn" aria-label="Cambiar entre tema claro y oscuro" title="Cambiar tema">
+        <i class="icon-sun" data-lucide="sun"></i>
+        <i class="icon-moon" data-lucide="moon"></i>
+      </button>
+      <button class="icon-btn" aria-label="Cuenta" data-toast="Próximamente: tu cuenta">
+        <i data-lucide="user"></i>
+      </button>
+      <button class="icon-btn" aria-label="Favoritos" data-toast="Próximamente: tu lista de deseos">
+        <i data-lucide="heart"></i>
+        <span class="icon-btn__count" id="wishCount">0</span>
+      </button>
+      <button class="icon-btn icon-btn--cart" id="cartBtn" aria-label="Abrir carrito" aria-haspopup="dialog">
+        <i data-lucide="shopping-bag"></i>
+        <span class="badge" id="cartBadge" data-count="0">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       3. NAVEGACIÓN STICKY con indicador deslizante
+       ========================================================= -->
+  <nav class="nav" id="nav" aria-label="Navegación principal">
+    <div class="nav__inner">
+      <ul class="nav__list" id="navList">
+        <li><a href="#hero" class="nav__link is-active">Inicio</a></li>
+        <li><a href="#catalog" class="nav__link">Tienda</a></li>
+        <li><a href="#categories" class="nav__link">Categorías</a></li>
+        <li><a href="#lookbook" class="nav__link">Lookbook</a></li>
+        <li><a href="#about" class="nav__link">Nosotros</a></li>
+        <li><a href="#contact" class="nav__link">Contacto</a></li>
+      </ul>
+      <span class="nav__indicator" id="navIndicator" aria-hidden="true"></span>
+    </div>
+  </nav>
+
+  <main>
+    <!-- =========================================================
+         4. HERO BANNER
+         ========================================================= -->
+    <section class="hero" id="hero">
+      <div class="hero__media">
+        <!-- 📸 FOTO HERO: Reemplaza src por '/src/assets/tu-imagen.jpg' -->
+        <img
+          src="./src/images/hero.jpg"
+          alt="Editorial de moda LAST CLASSIC — modelo con pantalón clásico"
+          fetchpriority="high" />
+        <span class="hero__overlay" aria-hidden="true"></span>
+      </div>
+
+      <div class="hero__content">
+        <p class="hero__eyebrow reveal">Colección 2026</p>
+        <h1 class="hero__title reveal">Un pantalón,<br />Diferentes estilos.</h1>
+        <p class="hero__subtitle reveal">Comodidad / Elegancia / Versatilidad</p>
+        <div class="hero__actions reveal">
+          <a class="btn btn--fill" href="#catalog" data-cursor-fill>
+            <span class="btn__label">Ver Colección</span>
+            <i data-lucide="arrow-right"></i>
+          </a>
+          <a class="btn btn--ghost" href="#lookbook">Descubrir el Lookbook</a>
+        </div>
+      </div>
+
+      <a class="hero__scroll" href="#categories" aria-label="Desplazarse hacia abajo">
+        <span class="hero__scroll-line" aria-hidden="true"></span>
+        Scroll
+      </a>
+    </section>
+
+    <!-- =========================================================
+         5. MARQUEE — TIRA DE VALORES
+         ========================================================= -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Envío gratis +$250.000</span><span>•</span>
+        <span>Colección atemporal</span><span>•</span>
+        <span>Tejidos certificados</span><span>•</span>
+        <span>Envío gratis +$250.000</span><span>•</span>
+        <span>Colección atemporal</span><span>•</span>
+        <span>Artesanía y detalle</span><span>•</span>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         6. CATEGORÍAS DESTACADAS
+         ========================================================= -->
+    <section class="section section--categories" id="categories">
+      <header class="section__head">
+        <p class="section__eyebrow reveal">Explora</p>
+        <h2 class="section__title reveal">Categorías</h2>
+      </header>
+
+      <div class="cat-grid">
+        <!-- 📸 FOTO CATEGORÍA: Reemplaza src por '/src/assets/tu-imagen.jpg' -->
+        <button class="cat-card reveal" data-filter-link="pantalones">
+          <span class="cat-card__media">
+            <img src="./src/images/pantalones.jpg" alt="Pantalones" loading="lazy" />
+          </span>
+          <span class="cat-card__body">
+            <span class="cat-card__name">Pantalones</span>
+            <span class="cat-card__count">24 prendas</span>
+          </span>
+        </button>
+
+        <!-- 📸 FOTO CATEGORÍA: Reemplaza src por '/src/assets/tu-imagen.jpg' -->
+        <button class="cat-card reveal" data-filter-link="camisas">
+          <span class="cat-card__media">
+            <img src="./src/images/camisa.jpg" alt="Camisas" loading="lazy" />
+          </span>
+          <span class="cat-card__body">
+            <span class="cat-card__name">Camisas</span>
+            <span class="cat-card__count">18 prendas</span>
+          </span>
+        </button>
+
+        <!-- 📸 FOTO CATEGORÍA: Reemplaza src por '/src/assets/tu-imagen.jpg' -->
+        <button class="cat-card reveal" data-filter-link="camisetas">
+          <span class="cat-card__media">
+            <img src="./src/images/camiseta.jpg" alt="Camisetas" loading="lazy" />
+          </span>
+          <span class="cat-card__body">
+            <span class="cat-card__name">Camisetas</span>
+            <span class="cat-card__count">15 prendas</span>
+          </span>
+        </button>
+
+        <!-- 📸 FOTO CATEGORÍA: Reemplaza src por '/src/assets/tu-imagen.jpg' -->
+        <button class="cat-card reveal" data-filter-link="accesorios">
+          <span class="cat-card__media">
+            <img src="./src/images/accessorios.jpg" alt="Accesorios" loading="lazy" />
+          </span>
+          <span class="cat-card__body">
+            <span class="cat-card__name">Accesorios</span>
+            <span class="cat-card__count">12 prendas</span>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         7. CATÁLOGO DE PRODUCTOS CON FILTROS
+         ========================================================= -->
+    <section class="section section--catalog" id="catalog">
+      <header class="section__head">
+        <p class="section__eyebrow reveal">Lo más destacado</p>
+        <h2 class="section__title reveal">Nuestro Catálogo</h2>
+        <p class="section__lead reveal">
+          Piezas que trascienden temporadas. Elige tu talla y arma tu look.
+        </p>
+      </header>
+
+      <!-- Filtros dinámicos (JS) -->
+      <div class="filters reveal" role="tablist" aria-label="Filtrar productos">
+        <button class="filter is-active" data-filter="todos" role="tab" aria-selected="true">Todos</button>
+        <button class="filter" data-filter="nuevos" role="tab" aria-selected="false">Novedades</button>
+        <button class="filter" data-filter="pantalones" role="tab" aria-selected="false">Pantalones</button>
+        <button class="filter" data-filter="camisas" role="tab" aria-selected="false">Camisas</button>
+        <button class="filter" data-filter="camisetas" role="tab" aria-selected="false">Camisetas</button>
+        <button class="filter" data-filter="accesorios" role="tab" aria-selected="false">Accesorios</button>
+        <button class="filter" data-filter="mas-vendidos" role="tab" aria-selected="false">Lo Más Vendido</button>
+        <span class="filters__indicator" id="filterIndicator" aria-hidden="true"></span>
+      </div>
+
+      <p class="results-count" id="resultsCount" aria-live="polite">8 productos</p>
+
+      <div class="product-grid" id="productGrid">
+        <!-- ======================= PRODUCTO 1 ======================= -->
+        <article
+          class="product reveal"
+          data-id="p1"
+          data-name="Pantalónes recto para mujer"
+          data-price="89900"
+          data-category="pantalones"
+          data-new="true"
+          data-best="true">
+          <div class="product__media">
+            <!-- 📸 FOTO PRODUCTO: Reemplaza src por '/src/assets/tu-imagen.jpg' -->
+            <img class="product__img product__img--primary"
+              src="./src/images/women.jpg"
+              alt="Pantalónes recto para mujer — vista frontal" loading="lazy" />
+            <!-- 📸 FOTO PRODUCTO (alternativa hover): Reemplaza src por '/src/assets/tu-imagen-2.jpg' -->
+            <img class="product__img product__img--secondary"
+              src="./src/images/women.jpg"
+              alt="Pantalónes recto para mujer — vista alternate" loading="lazy" />
+
+            <span class="tag tag--new">Nuevo</span>
+            <button class="product__favorite" aria-label="Agregar a favoritos" data-wish>
+              <i data-lucide="heart"></i>
+            </button>
+
+            <div class="product__quick">
+              <div class="sizes" role="group" aria-label="Tallas de Pantalónes recto para mujer">
+                <button class="size" data-size="S">S</button>
+                <button class="size" data-size="M">M</button>
+                <button class="size" data-size="L">L</button>
+                <button class="size" data-size="XL">XL</button>
+              </div>
+              <button class="product__add" data-add-to-cart>
+                <span>Añadir al Carrito</span>
+                <i data-lucide="plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product__info">
+            <h3 class="product__name">Pantalónes recto para mujer</h3>
+            <p class="product__price">$89.900</p>
+          </div>
+        </article>
+
+        <!-- ======================= PRODUCTO 2 ======================= -->
+        <article
+          class="product reveal"
+          data-id="p2"
+          data-name="Pantalónes clasicos para mujer "
+          data-price="94900"
+          data-category="pantalones"
+          data-best="true">
+          <div class="product__media">
+            <!-- 📸 FOTO PRODUCTO: Reemplaza src por '/src/assets/tu-imagen.jpg' -->
+            <img class="product__img product__img--primary"
+              src="./src/images/pantaloneswomen.jpg"
+              alt="Pantalónes clasicos para mujer" loading="lazy" />
+            <!-- 📸 FOTO PRODUCTO (alternativa hover): Reemplaza src por '/src/assets/tu-imagen-2.jpg' -->
+            <img class="product__img product__img--secondary"
+              src="./src/images/pantaloneswomen.jpg"
+              alt="Pantalónes clasicos para mujer — vista alternativa" loading="lazy" />
+
+            <span class="tag tag--best">Más Vendido</span>
+            <button class="product__favorite" aria-label="Agregar a favoritos" data-wish>
+              <i data-lucide="heart"></i>
+            </button>
+
+            <div class="product__quick">
+              <div class="sizes" role="group" aria-label="Tallas de Pantalón Wide Leg Negro">
+                <button class="size" data-size="S">S</button>
+                <button class="size" data-size="M">M</button>
+                <button class="size" data-size="L">L</button>
+                <button class="size" data-size="XL">XL</button>
+              </div>
+              <button class="product__add" data-add-to-cart>
+                <span>Añadir al Carrito</span>
+                <i data-lucide="plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product__info">
+            <h3 class="product__name">Pantalónes clasicos para mujer</h3>
+            <p class="product__price">$94.900</p>
+          </div>
+        </article>
+
+        <!-- ======================= PRODUCTO 5 ======================= -->
+        <article
+          class="product reveal"
+          data-id="p5"
+          data-name="Camisetas básicas manga corta "
+          data-price="39900"
+          data-category="camisetas"
+          data-best="true">
+          <div class="product__media">
+            <!-- 📸 FOTO PRODUCTO: Reemplaza src por '/src/assets/tu-imagen.jpg' -->
+            <img class="product__img product__img--primary"
+              src="./src/images/camisawoman.jpg"
+              alt="Camisetas básicas manga cortas " loading="lazy" />
+            <!-- 📸 FOTO PRODUCTO (alternativa hover): Reemplaza src por '/src/assets/tu-imagen-2.jpg' -->
+            <img class="product__img product__img--secondary"
+              src="./src/images/camisawoman.jpg"
+              alt="Camisetas básicas manga cortas  — vista alternativa" loading="lazy" />
+
+            <button class="product__favorite" aria-label="Agregar a favoritos" data-wish>
+              <i data-lucide="heart"></i>
+            </button>
+
+            <div class="product__quick">
+              <div class="sizes" role="group" aria-label="Tallas de Camiseta Algodón Premium">
+                <button class="size" data-size="S">S</button>
+                <button class="size" data-size="M">M</button>
+                <button class="size" data-size="L">L</button>
+                <button class="size" data-size="XL">XL</button>
+              </div>
+              <button class="product__add" data-add-to-cart>
+                <span>Añadir al Carrito</span>
+                <i data-lucide="plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product__info">
+            <h3 class="product__name">Camisetas básicas manga corta</h3>
+            <p class="product__price">$39.900</p>
+          </div>
+        </article>
+
+        <!-- ======================= PRODUCTO 6 ======================= -->
+        <article
+          class="product reveal"
+          data-id="p6"
+          data-name="Body"
+          data-price="44900"
+          data-category="camisetas"
+          data-new="true">
+          <div class="product__media">
+            <!-- 📸 FOTO PRODUCTO: Reemplaza src por '/src/assets/tu-imagen.jpg' -->
+            <img class="product__img product__img--primary"
+              src="./src/images/body.jpg"
+              alt="Body" loading="lazy" />
+            <!-- 📸 FOTO PRODUCTO (alternativa hover): Reemplaza src por '/src/assets/tu-imagen-2.jpg' -->
+            <img class="product__img product__img--secondary"
+              src="./src/images/body.jpg"
+              alt="Body  — vista alternativa" loading="lazy" />
+
+            <span class="tag tag--new">Nuevo</span>
+            <button class="product__favorite" aria-label="Agregar a favoritos" data-wish>
+              <i data-lucide="heart"></i>
+            </button>
+
+            <div class="product__quick">
+              <div class="sizes" role="group" aria-label="Body">
+                <button class="size" data-size="S">S</button>
+                <button class="size" data-size="M">M</button>
+                <button class="size" data-size="L">L</button>
+                <button class="size" data-size="XL">XL</button>
+              </div>
+              <button class="product__add" data-add-to-cart>
+                <span>Añadir al Carrito</span>
+                <i data-lucide="plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product__info">
+            <h3 class="product__name">Body</h3>
+            <p class="product__price">$44.900</p>
+          </div>
+        </article>
+
+       
+       
+
+      <!-- Estado vacío (búsqueda sin resultados) -->
+      <div class="empty-state" id="emptyState" hidden>
+        <i data-lucide="search-x"></i>
+        <h3>Sin resultados</h3>
+        <p>No encontramos productos que coincidan con tu búsqueda.</p>
+        <button class="btn btn--ghost" id="resetFilters">Limpiar filtros</button>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         8. LOOKBOOK — DISTRIBUCIÓN ASIMÉTRICA
+         ========================================================= -->
+    <section class="section section--lookbook" id="lookbook">
+      <div class="lookbook">
+        <div class="lookbook__text reveal">
+          <p class="section__eyebrow">Lookbook</p>
+          <h2 class="lookbook__title">El estilo,<br />para <em>cada</em> día.</h2>
+          <p class="lookbook__lead">
+            Diseñamos prendas que acompañan tu ritmo. Tejidos nobles, siluetas
+            relajadas y una paleta atemporal que nunca pasa de moda.
+          </p>
+          <ul class="lookbook__list">
+            <li><i data-lucide="leaf"></i> Tejidos certificados y naturales</li>
+            <li><i data-lucide="scissors"></i> Costuras de autor</li>
+            <li><i data-lucide="sparkles"></i> Acabado mate premium</li>
+          </ul>
+          <a class="btn btn--fill" href="#catalog" data-cursor-fill>
+            <span class="btn__label">Ver todos los pantalones</span>
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="lookbook__media reveal">
+          <!-- 📸 FOTO LOOKBOOK (principal): Reemplaza src por '/src/assets/tu-imagen.jpg' -->
+          <img class="lookbook__img lookbook__img--tall"
+            src="./src/images/pantalonniña.jpg"
+            alt="Editorial LAST CLASSIC — silueta relajada" loading="lazy" />
+          <!-- 📸 FOTO LOOKBOOK (detalle): Reemplaza src por '/src/assets/tu-imagen-2.jpg' -->
+          <img class="lookbook__img lookbook__img--small"
+            src="./src/images/boy.jpg"
+            alt="Detalle de textura de tejido LAST CLASSIC" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         9. NOSOTROS / MANIFIESTO
+         ========================================================= -->
+    <section class="section section--about" id="about">
+      <div class="about">
+        <div class="about__media reveal">
+          <!-- 📸 FOTO MANIFIESTO: Reemplaza src por '/src/assets/tu-imagen.jpg' -->
+          <img src="./src/images/store.jpg"
+            alt="Manifiesto LAST CLASSIC" loading="lazy" />
+        </div>
+        <div class="about__content reveal">
+          <p class="section__eyebrow">Nuestro manifiesto</p>
+          <h2 class="section__title section__title--left">Menos, pero mejor.</h2>
+          <p>
+            En LAST CLASSIC creemos en una moda silenciosa. Piezas que se
+            combinan entre sí, que no pasan de moda y que se sienten tan bien
+            como lucen. Sin estridencias. Sin exceso.
+          </p>
+          <div class="about__stats">
+            <div class="stat">
+              <span class="stat__num" data-count="12">0</span>
+              <span class="stat__label">Años de trayectoria</span>
+            </div>
+            <div class="stat">
+              <span class="stat__num" data-count="45000">0</span>
+              <span class="stat__label">Clientes felices</span>
+            </div>
+            <div class="stat">
+              <span class="stat__num" data-count="4">0</span>
+              <span class="stat__label">Países con envío</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         10. BENEFICIOS (BANDA DE CONFIANZA)
+         ========================================================= -->
+    <section class="perks" aria-label="Beneficios de compra">
+      <ul class="perks__grid">
+        <li class="perk reveal">
+          <i data-lucide="truck"></i>
+          <h3>Envío gratis</h3>
+          <p>En compras superiores a $250.000 a todo el país.</p>
+        </li>
+        <li class="perk reveal">
+          <i data-lucide="shield-check"></i>
+          <h3>Pago seguro</h3>
+          <p>Pasarelas certificadas y protección al comprador.</p>
+        </li>
+        <li class="perk reveal">
+          <i data-lucide="rotate-ccw"></i>
+          <h3>Cambios fáciles</h3>
+          <p>Tienes 30 días para cambiar tu prenda sin preguntas.</p>
+        </li>
+        <li class="perk reveal">
+          <i data-lucide="headset"></i>
+          <h3>Soporte humano</h3>
+          <p>Te asesoramos de lunes a sábado por WhatsApp.</p>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       11. FOOTER COMPLETO
+       ========================================================= -->
+  <footer class="footer" id="contact">
+    <div class="footer__top">
+      <!-- Newsletter -->
+      <div class="footer__newsletter">
+        <p class="section__eyebrow">Newsletter</p>
+        <h2 class="footer__title">Recibe un <em>10%</em> en tu primera compra</h2>
+        <p class="footer__lead">
+          Suscríbete y sé la primera en saber sobre lanzamientos, drops y
+          ediciones limitadas.
+        </p>
+
+        <form class="newsletter" id="newsletterForm" novalidate>
+          <div class="newsletter__field">
+            <i data-lucide="mail"></i>
+            <input
+              type="email"
+              id="newsletterEmail"
+              placeholder="Tu correo electrónico"
+              aria-label="Tu correo electrónico"
+              autocomplete="email" />
+          </div>
+          <button type="submit" class="newsletter__submit" aria-label="Suscribirme">
+            <i data-lucide="arrow-right"></i>
+          </button>
+          <p class="newsletter__error" id="newsletterError" role="alert" hidden>
+            Introduce un correo electrónico válido.
+          </p>
+        </form>
+
+        <div class="newsletter__success" id="newsletterSuccess" hidden>
+          <i data-lucide="check"></i>
+          <p><strong>¡Listo!</strong> Revisa tu correo para confirmar tu suscripción.</p>
+        </div>
+      </div>
+
+      <!-- Columnas de enlaces -->
+      <nav class="footer__col" aria-label="Tienda">
+        <h3 class="footer__heading">Tienda</h3>
+        <ul>
+          <li><a href="#catalog" data-filter-link="todos">Nuevo</a></li>
+          <li><a href="#catalog" data-filter-link="pantalones">Pantalones</a></li>
+          <li><a href="#catalog" data-filter-link="camisas">Camisas</a></li>
+          <li><a href="#catalog" data-filter-link="camisetas">Camisetas</a></li>
+          <li><a href="#catalog" data-filter-link="accesorios">Accesorios</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer__col" aria-label="Ayuda">
+        <h3 class="footer__heading">Ayuda</h3>
+        <ul>
+          <li><a href="#">Guía de tallas</a></li>
+          <li><a href="#">Envíos y entregas</a></li>
+          <li><a href="#">Cambios y devoluciones</a></li>
+          <li><a href="#">Términos y condiciones</a></li>
+          <li><a href="#">Preguntas frecuentes</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer__col">
+        <h3 class="footer__heading">Síguenos</h3>
+        <p class="footer__lead footer__lead--tight">@lastclassic.fashion</p>
+        <ul class="social">
+          <li>
+            <a href="#" aria-label="Instagram" data-toast="Instagram">
+              <i data-lucide="camera"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="TikTok" data-toast="TikTok">
+              <i data-lucide="music-2"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Pinterest" data-toast="Pinterest">
+              <i data-lucide="pin"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Facebook" data-toast="Facebook">
+              <i data-lucide="rss"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© <span id="year">2026</span> LAST CLASSIC — FASHION. Todos los derechos reservados.</p>
+      <ul class="payments" aria-label="Métodos de pago aceptados">
+        <li>VISA</li>
+        <li>MASTERCARD</li>
+        <li>AMEX</li>
+        <li>PSE</li>
+        <li>NEBULA</li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       12. OVERLAYS — CARRITO, MENÚ MÓVIL, TOAST
+       ========================================================= -->
+  <div class="overlay" id="overlay" hidden></div>
+
+  <!-- Drawer: Menú móvil (off-canvas) -->
+  <aside class="drawer drawer--menu" id="menuDrawer" aria-hidden="true" inert aria-label="Menú de navegación">
+    <span class="drawer__grip" aria-hidden="true"></span>
+    <div class="drawer__head">
+      <span class="logo logo--drawer">
+        <span class="logo__wordmark">LAST CLASSIC</span>
+      </span>
+      <button class="icon-btn" data-close-drawer aria-label="Cerrar menú">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <nav class="drawer__nav" aria-label="Menú móvil">
+      <a href="#hero" class="drawer__link"><span>01</span> Inicio</a>
+      <a href="#catalog" class="drawer__link"><span>02</span> Tienda</a>
+      <a href="#categories" class="drawer__link"><span>03</span> Categorías</a>
+      <a href="#lookbook" class="drawer__link"><span>04</span> Lookbook</a>
+      <a href="#about" class="drawer__link"><span>05</span> Nosotros</a>
+      <a href="#contact" class="drawer__link"><span>06</span> Contacto</a>
+    </nav>
+    <div class="drawer__foot">
+      <p><i data-lucide="truck"></i> Envío gratis +$250.000</p>
+      <p><i data-lucide="lock-keyhole"></i> Pagos 100% seguros</p>
+    </div>
+  </aside>
+
+  <!-- Drawer: Carrito -->
+  <aside class="drawer drawer--cart" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Tu carrito" aria-hidden="true" inert>
+    <span class="drawer__grip" aria-hidden="true"></span>
+    <div class="drawer__head">
+      <h2 class="drawer__title">
+        Tu Carrito <span class="drawer__count" id="drawerCount">(0)</span>
+      </h2>
+      <button class="icon-btn" data-close-drawer aria-label="Cerrar carrito">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <div class="cart">
+      <!-- Estado vacío -->
+      <div class="cart__empty" id="cartEmpty">
+        <i data-lucide="shopping-bag"></i>
+        <p>Tu carrito está vacío</p>
+        <span>Descubre piezas que nunca pasan de moda.</span>
+        <button class="btn btn--ghost" data-close-drawer>Seguir comprando</button>
+      </div>
+
+      <!-- Lista de productos (renderizada por JS) -->
+      <ul class="cart__list" id="cartList"></ul>
+    </div>
+
+    <div class="cart__summary" id="cartSummary" hidden>
+      <div class="cart__row">
+        <span>Subtotal</span>
+        <span id="cartSubtotal">$0</span>
+      </div>
+      <div class="cart__row cart__row--muted">
+        <span>Envío</span>
+        <span id="cartShipping">Gratis</span>
+      </div>
+      <div class="cart__row cart__row--total">
+        <span>Total</span>
+        <span id="cartTotal">$0</span>
+      </div>
+      <button class="btn btn--fill btn--block" id="checkoutBtn" data-cursor-fill>
+        <span class="btn__label">Finalizar Compra</span>
+        <i data-lucide="arrow-right"></i>
+      </button>
+      <button class="cart__clear" id="clearCart">Vaciar carrito</button>
+    </div>
+  </aside>
+
+  <!-- Toast de notificaciones -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <i data-lucide="check"></i>
+    <span id="toastText">Añadido al carrito</span>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
